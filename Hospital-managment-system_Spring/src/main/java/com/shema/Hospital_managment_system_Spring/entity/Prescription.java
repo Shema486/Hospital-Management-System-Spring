@@ -11,9 +11,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Prescription {
-    private Long id;
-    private Long prescriptionId;
-    private Long appointmentId;
+    private int id;
+    private int prescriptionId;
+    private int appointmentId;
     private LocalDateTime prescriptionDate;
     private String notes;
 

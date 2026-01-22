@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MedicalInventory {
- private Long itemId;
+ private int itemId;
  private String itemName;
  private int StockQuantity;
  private double unitPrice;
