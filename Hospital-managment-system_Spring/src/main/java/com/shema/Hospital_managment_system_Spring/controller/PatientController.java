@@ -44,13 +44,10 @@ public class PatientController {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<Map<String, String>> update(
+    public ResponseEntity<PatientResponseDTO> update(
             @PathVariable long id,
             @Valid @RequestBody PatientRequestDTO dto) {
-        patientService.updatePatient(id, dto);
-        Map<String, String> response = new HashMap<>();
-        response.put("message", "Patient updated successfully");
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(patientService.updatePatient(id, dto));
     }
 
     @DeleteMapping("/{id}")

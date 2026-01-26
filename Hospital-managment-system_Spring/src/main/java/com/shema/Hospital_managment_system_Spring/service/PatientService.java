@@ -63,7 +63,7 @@ public class PatientService {
     }
 
     // UPDATE
-    public void updatePatient(long id, PatientRequestDTO dto) {
+    public PatientResponseDTO updatePatient(long id, PatientRequestDTO dto) {
 
         Patient existing = patientDAO.searchPatientById(id);
         if (existing == null) {
@@ -80,6 +80,7 @@ public class PatientService {
         existing.setAddress(dto.getAddress());
 
         patientDAO.updatePatient(existing);
+        return mapToResponseDTO(existing);
     }
 
     // DELETE
