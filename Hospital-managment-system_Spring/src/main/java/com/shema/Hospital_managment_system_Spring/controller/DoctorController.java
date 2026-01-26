@@ -1,0 +1,73 @@
+package com.shema.Hospital_managment_system_Spring.controller;
+
+import com.shema.Hospital_managment_system_Spring.repository.dto.request.DoctorRequestDTO;
+import com.shema.Hospital_managment_system_Spring.repository.dto.response.DoctorResponseDTO;
+import com.shema.Hospital_managment_system_Spring.service.DoctorService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+
+import java.util.List;
+import java.util.Map;
+
+@RestController
+@RequestMapping("/api/doctor")
+@AllArgsConstructor
+@Tag(
+        name = "Doctors",
+        description = "Manage doctors and their department assignments"
+)
+public class DoctorController {
+
+    private DoctorService doctorService;
+
+    @GetMapping
+    public ResponseEntity<List<DoctorResponseDTO>> getAllDoctor() {
+        return ResponseEntity.ok(doctorService.getAllDoctor());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<DoctorResponseDTO> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(doctorService.getDoctorById(id));
+    }
+
+    @GetMapping("/specialization")
+    public ResponseEntity<List<DoctorResponseDTO>> findBySpecialization(
+            @RequestParam String specialization) {
+        return ResponseEntity.ok(
+                doctorService.findDoctorsBySpecialization(specialization)
+        );
+    }
+    @Operation(
+            summary = "Create a doctor",
+            description = "Registers a doctor and assigns them to a department"
+    )
+    @PostMapping
+    public ResponseEntity<DoctorResponseDTO> addDoctor(
+            @Valid @RequestBody DoctorRequestDTO requestDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(doctorService.addDoctor(requestDTO));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Map<String, String>> update(
+            @PathVariable Long id,
+            @Valid @RequestBody DoctorRequestDTO dto) {
+
+        doctorService.updateDoctor(id, dto);
+        return ResponseEntity.ok(Map.of("message", "Doctor updated successfully"));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Map<String, String>> deleteDoctor(
+            @PathVariable Long id) {
+
+        doctorService.deleteDoctor(id);
+        return ResponseEntity.ok(Map.of("message", "Doctor deleted successfully"));
+    }
+}

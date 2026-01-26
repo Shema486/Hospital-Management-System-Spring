@@ -1,14 +1,13 @@
-package com.shema.Hospital_managment_system_Spring.entity;
-
+package com.shema.Hospital_managment_system_Spring.repository.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Doctor {
+@Data
+public class DoctorResponseDTO {
     private  Long doctorId;
     private String firstName;
     private String lastName;
@@ -16,5 +15,4 @@ public class Doctor {
     private String email;
     private String phone;
     private Long department;
-
 }
