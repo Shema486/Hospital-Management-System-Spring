@@ -25,6 +25,7 @@ input PatientRequest{
 type Mutation{
     addPatient(input: PatientRequest!):Patient!
     deletePatient(id:ID!) : Patient!
+    updatePatient(id:ID,input:PatientRequest!):Patient!
 }
 
 

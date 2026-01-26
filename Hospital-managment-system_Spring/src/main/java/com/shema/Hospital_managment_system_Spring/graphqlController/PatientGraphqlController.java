@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @AllArgsConstructor
@@ -43,5 +45,14 @@ public class PatientGraphqlController {
     public void deletePatient(@Argument Long id){
          patientService.deletePatient(id);
     }
+    @MutationMapping
+    public PatientResponseDTO updatePatient(
+            @Argument long id,
+            @Argument PatientRequestDTO dto) {
+
+        return patientService.updatePatient(id, dto);
+    }
+
+
 
 }
