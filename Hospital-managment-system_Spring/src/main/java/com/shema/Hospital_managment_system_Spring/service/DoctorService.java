@@ -71,7 +71,7 @@ public class DoctorService {
         return mapToResponse(doctor);
     }
 
-    public void updateDoctor(Long id, DoctorRequestDTO dto) {
+    public DoctorResponseDTO updateDoctor(Long id, DoctorRequestDTO dto) {
         if (dto == null) {
             throw new BadRequestException("Doctor data is required");
         }
@@ -96,6 +96,7 @@ public class DoctorService {
         existing.setDepartment(dto.getDepartment());
 
         doctorDao.updateDoctor(existing);
+        return mapToResponse(existing);
     }
 
     public void deleteDoctor(Long doctorId) {

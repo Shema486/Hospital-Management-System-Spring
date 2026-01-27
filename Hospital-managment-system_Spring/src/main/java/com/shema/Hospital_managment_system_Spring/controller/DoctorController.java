@@ -18,24 +18,30 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/doctor")
 @AllArgsConstructor
-@Tag(
-        name = "Doctors",
-        description = "Manage doctors and their department assignments"
-)
+@Tag(name = "Doctors", description = "Manage doctors and their department assignments")
 public class DoctorController {
 
     private DoctorService doctorService;
-
+    @Operation(
+            summary = "Find all Doctors",
+            description = "You can find all doctors in all departments"
+    )
     @GetMapping
     public ResponseEntity<List<DoctorResponseDTO>> getAllDoctor() {
         return ResponseEntity.ok(doctorService.getAllDoctor());
     }
-
+    @Operation(
+            summary = "Get a doctor By ID",
+            description = "You can find a doctor by his/her Id"
+    )
     @GetMapping("/{id}")
     public ResponseEntity<DoctorResponseDTO> findById(@PathVariable Long id) {
         return ResponseEntity.ok(doctorService.getDoctorById(id));
     }
-
+    @Operation(
+            summary = "Search a doctor",
+            description = "Search doctors according to their specialization"
+    )
     @GetMapping("/specialization")
     public ResponseEntity<List<DoctorResponseDTO>> findBySpecialization(
             @RequestParam String specialization) {
@@ -43,26 +49,27 @@ public class DoctorController {
                 doctorService.findDoctorsBySpecialization(specialization)
         );
     }
-    @Operation(
-            summary = "Create a doctor",
-            description = "Registers a doctor and assigns them to a department"
-    )
+    @Operation(summary = "Create a doctor", description = "Registers a doctor and assigns them to a department")
     @PostMapping
     public ResponseEntity<DoctorResponseDTO> addDoctor(
             @Valid @RequestBody DoctorRequestDTO requestDTO) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(doctorService.addDoctor(requestDTO));
     }
-
+    @Operation(
+            summary = "Update a doctor",
+            description = "you can update  names, specialization, email, phone and also department"
+    )
     @PutMapping("/{id}")
-    public ResponseEntity<Map<String, String>> update(
+    public ResponseEntity<DoctorResponseDTO> update(
             @PathVariable Long id,
             @Valid @RequestBody DoctorRequestDTO dto) {
-
-        doctorService.updateDoctor(id, dto);
-        return ResponseEntity.ok(Map.of("message", "Doctor updated successfully"));
+        return ResponseEntity.ok(doctorService.updateDoctor(id, dto));
     }
-
+    @Operation(
+            summary = "Delete a doctor",
+            description = "use Id of doctor to delete him/her"
+    )
     @DeleteMapping("/{id}")
     public ResponseEntity<Map<String, String>> deleteDoctor(
             @PathVariable Long id) {
