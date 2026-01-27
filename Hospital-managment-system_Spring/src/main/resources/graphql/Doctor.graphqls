@@ -1,0 +1,30 @@
+type Doctor{
+    doctorId:ID!
+    firstName:String!
+    lastName:String!
+    specialization:String
+    email:String
+    phone:String
+    department:ID
+}
+
+input DoctorRequest{
+    firstName:String!
+    lastName:String!
+    specialization:String!
+    email:String!
+    phone:String!
+    department:ID!
+}
+type Query{
+    doctors:[Doctor!]!
+    doctorById(id:ID!):Doctor
+    doctorBySpecialization(specialization:String!):[Doctor!]
+
+}
+
+type Mutation{
+    addDoctor(input:DoctorRequest!):Doctor
+    deleteDoctor(id:ID!):String!
+    updateDoctor(id:ID! , input:DoctorRequest!):Doctor
+}
