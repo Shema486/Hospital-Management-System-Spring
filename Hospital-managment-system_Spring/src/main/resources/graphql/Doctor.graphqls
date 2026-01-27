@@ -16,14 +16,14 @@ input DoctorRequest{
     phone:String!
     department:ID!
 }
-type Query{
+extend type Query{
     doctors:[Doctor!]!
     doctorById(id:ID!):Doctor
     doctorBySpecialization(specialization:String!):[Doctor!]
 
 }
 
-type Mutation{
+extend type Mutation{
     addDoctor(input:DoctorRequest!):Doctor
     deleteDoctor(id:ID!):String!
     updateDoctor(id:ID! , input:DoctorRequest!):Doctor

@@ -8,12 +8,12 @@ input DepartmentRequest{
     locationFloor:Int!
     deptName:String!
 }
-type Query{
+extend type Query{
     departments:[Department!]!
     departmentById(id:ID!):Department
 
 }
-type Mutation{
+extend type Mutation{
     addDepartment(input:DepartmentRequest!):Department
     deleteDepartment(id:ID!):String!
     updateDepartment(id:ID!, input:DepartmentRequest):Department

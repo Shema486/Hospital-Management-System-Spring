@@ -11,10 +11,10 @@ input InventoryRequest{
     unitPrice:Float!
 }
 
-type Query{
+extend type Query{
     inventories:[Inventory!]!
 }
-type Mutation{
+extend type Mutation{
     addInventory(input:InventoryRequest!):Inventory
     deleteInventory(id:ID):String!
     updateInventory(idd:ID, input:InventoryRequest):Inventory
