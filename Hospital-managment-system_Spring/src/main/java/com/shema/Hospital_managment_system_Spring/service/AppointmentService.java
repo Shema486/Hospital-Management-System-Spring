@@ -70,13 +70,26 @@ public class AppointmentService {
         appointmentDao.deleteAppointment(appointmentId);
     }
 
-    public void updateStatus(Long appointmentId, String status) {
+    public AppointmentResponseDTO updateStatus(Long appointmentId, String status) {
+
         Appointment existing = appointmentDao.searchById(appointmentId);
-        if (existing ==null || status ==null){
-            throw new NotFoundException("appointment not found with ID:" + appointmentId);
+
+        if (existing == null) {
+            throw new NotFoundException(
+                    "Appointment not found with ID: " + appointmentId
+            );
         }
+
+        if (status == null) {
+            throw new IllegalArgumentException("Status must not be null");
+        }
+
         appointmentDao.updateStatus(appointmentId, status);
+
+        Appointment updated = appointmentDao.searchById(appointmentId);
+        return mapToResponse(updated);
     }
+
     public AppointmentResponseDTO mapToResponse(Appointment appointment){
         return new AppointmentResponseDTO(
                 appointment.getAppointmentId(),

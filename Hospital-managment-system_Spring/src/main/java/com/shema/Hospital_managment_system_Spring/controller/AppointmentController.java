@@ -25,7 +25,7 @@ import java.util.Map;
 public class AppointmentController {
 
     private final AppointmentService appointmentService;
-
+    @Operation(summary = "Find an appointment", description = "Find all  appointments assigned to doctors and patients ")
     @GetMapping
     public ResponseEntity<List<AppointmentResponseDTO>> getAllAppointments() {
         return ResponseEntity.ok(appointmentService.getAllAppointments());
@@ -50,8 +50,15 @@ public class AppointmentController {
             @PathVariable Long id,
             @RequestParam String status) {
 
-        appointmentService.updateStatus(id, status);
-        return ResponseEntity.ok(Map.of("message", "Appointment status updated successfully", "appointmentId", id.toString(), "status", status)
+        AppointmentResponseDTO updated =
+                appointmentService.updateStatus(id, status);
+
+        return ResponseEntity.ok(
+                Map.of(
+                        "message", "Appointment status updated successfully",
+                        "appointmentId", updated.getAppointmentId().toString(),
+                        "status", updated.getStatus()
+                )
         );
     }
 }
