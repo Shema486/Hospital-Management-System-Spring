@@ -20,27 +20,37 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/department")
 @AllArgsConstructor
-@Tag(
-        name = "Departments",
-        description = "Manage hospital departments"
-)
+@Tag(name = "Departments", description = "Manage hospital departments")
 public class DepartmentController {
 
     private final DepartmentService departmentService;
 
-    // GET ALL
+    @Operation(
+            summary = "Find all departments",
+            description = "Get all departments that exist"
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Department fetched successfully"),
+            @ApiResponse(responseCode = "404", description = "Departments not found")})
     @GetMapping
     public ResponseEntity<List<DepartmentResponseDTO>> getAllDepartment() {
         return ResponseEntity.ok(departmentService.getAllDepartment());
     }
 
     // GET BY ID
+    @Operation(
+            summary = "Find a department ",
+            description = "Find a department By ID assigned to it"
+    )
+    @ApiResponses({@ApiResponse(responseCode = "404", description = "Department not found")})
     @GetMapping("/{id}")
     public ResponseEntity<DepartmentResponseDTO> findById(@PathVariable Long id) {
         return ResponseEntity.ok(departmentService.findByID(id));
     }
 
     // ADD
+    @Operation(summary = "Create a department", description = "Create new  department ")
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "Department added successfully"),})
     @PostMapping
     public ResponseEntity<DepartmentResponseDTO> addDepartment(
             @Valid @RequestBody DepartmentRequestDTO dto) {
@@ -48,15 +58,19 @@ public class DepartmentController {
     }
 
     // UPDATE
+    @Operation(
+            summary = "Update a department",
+            description = "Update a department with ID"
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Department updated successfully"),
+            @ApiResponse(responseCode = "404", description = "Department not found")
+    })
     @PutMapping("/{id}")
-    public ResponseEntity<Map<String, String>> updateDepartment(
+    public DepartmentResponseDTO updateDepartment(
             @PathVariable Long id,
             @Valid @RequestBody DepartmentRequestDTO dto) {
-        departmentService.updateDepartment(id, dto);
-        Map<String, String> response = new HashMap<>();
-        response.put("message", "Department updated successfully");
-
-        return ResponseEntity.ok(response);
+        return departmentService.updateDepartment(id, dto);
     }
 
     // DELETE

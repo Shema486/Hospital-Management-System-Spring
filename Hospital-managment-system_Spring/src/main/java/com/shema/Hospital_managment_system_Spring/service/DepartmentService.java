@@ -57,7 +57,7 @@ public class DepartmentService {
     }
 
     // UPDATE
-    public void updateDepartment(Long id, DepartmentRequestDTO dto) {
+    public DepartmentResponseDTO updateDepartment(Long id, DepartmentRequestDTO dto) {
         Department existing = departmentDao.findById(id);
         if (existing == null) {
             throw new NotFoundException("Department not found with id: " + id);
@@ -65,6 +65,7 @@ public class DepartmentService {
         existing.setDeptName(dto.getDeptName());
         existing.setLocationFloor(dto.getLocationFloor());
         departmentDao.updateDepartment(existing);
+        return mapToResponseDTO(existing);
     }
 
     // DELETE
