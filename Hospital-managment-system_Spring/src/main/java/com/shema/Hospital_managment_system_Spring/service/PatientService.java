@@ -63,9 +63,12 @@ public class PatientService {
     }
 
     // UPDATE
-    public PatientResponseDTO updatePatient(long id, PatientRequestDTO dto) {
+    public PatientResponseDTO updatePatient(Long id, PatientRequestDTO dto) {
 
         Patient existing = patientDAO.searchPatientById(id);
+        if(dto==null){
+            throw new BadRequestException("fields are required");
+        }
         if (existing == null) {
             throw new NotFoundException("Patient not found with ID: " + id);
         }
