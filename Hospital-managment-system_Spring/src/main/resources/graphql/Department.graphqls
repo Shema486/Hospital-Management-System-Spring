@@ -1,0 +1,20 @@
+type Department{
+    deptID:ID!
+    locationFloor:Int
+    deptName:String!
+}
+
+input DepartmentRequest{
+    locationFloor:Int!
+    deptName:String!
+}
+type Query{
+    departments:[Department!]!
+    departmentById(id:ID!):Department
+
+}
+type Mutation{
+    addDepartment(input:DepartmentRequest!):Department
+    deleteDepartment(id:ID!):String!
+    updateDepartment(id:ID!, input:DepartmentRequest):Department
+}
