@@ -39,7 +39,7 @@ public class MedicalInventoryService {
 
     }
 
-    public void updateInventoryItem(Long id,MedicalInventoryRequestDTO item) {
+    public MedicalInventoryResponseDTO updateInventoryItem(Long id,MedicalInventoryRequestDTO item) {
         MedicalInventory existing = inventoryDAO.findById(id);
         if (item == null){
             throw new BadRequestException("Inventory is required");
@@ -53,6 +53,7 @@ public class MedicalInventoryService {
         existing.setUnitPrice(item.getUnitPrice());
 
         inventoryDAO.updateItem(existing);
+        return mapToResponse(existing);
 
     }
 
