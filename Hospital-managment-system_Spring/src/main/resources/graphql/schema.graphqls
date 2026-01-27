@@ -22,10 +22,11 @@ input PatientRequest{
     address:String!
 
 }
+
 type Mutation{
-    addPatient(input: PatientRequest!):Patient!
-    deletePatient(id:ID!) : Patient!
-    updatePatient(id:ID,input:PatientRequest!):Patient!
+    addPatient(input: PatientRequest!):Patient
+    deletePatient(id:ID!) : ID!
+    updatePatient(id:ID,input:PatientRequest!):Patient
 }
 
 
