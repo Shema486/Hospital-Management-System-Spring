@@ -38,18 +38,17 @@ public class PatientGraphqlController {
         return patientService.searchPatientByLastName(lastName);
     }
     @MutationMapping
-    public PatientResponseDTO addPatient(@Argument PatientRequestDTO input) {
+    public PatientResponseDTO addPatient(@Valid @Argument PatientRequestDTO input) {
         return patientService.addPatient(input);
     }
     @MutationMapping
-    public void deletePatient(@Argument Long id){
+    public Long deletePatient(@Argument Long id){
          patientService.deletePatient(id);
+         return id;
     }
     @MutationMapping
-    public PatientResponseDTO updatePatient(
-            @Argument long id,
-            @Argument PatientRequestDTO dto) {
-
+    public PatientResponseDTO updatePatient(@Argument Long id,
+            @Valid @Argument("input") PatientRequestDTO dto) {
         return patientService.updatePatient(id, dto);
     }
 
