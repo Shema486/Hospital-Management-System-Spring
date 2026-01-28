@@ -7,6 +7,8 @@ import com.shema.Hospital_managment_system_Spring.util.DBConnection;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Repository
@@ -34,6 +36,23 @@ public class SystemUserDao {
         } catch (SQLException e) {
             throw new DatabaseException("Error adding user", e);
         }
+    }
+
+    public List<SystemUser> findAll() {
+        List<SystemUser> list = new ArrayList<>();
+        String sql = "SELECT * FROM system_users";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                list.add(mapToUser(rs));
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Error fetching users", e);
+        }
+        return list;
     }
 
     public SystemUser findByUsername(String username) {
