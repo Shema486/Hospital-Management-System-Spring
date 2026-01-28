@@ -16,30 +16,36 @@ import java.util.List;
 @Controller
 @AllArgsConstructor
 public class DepartmentGraphqlController {
-    private DepartmentService departmentService;
+
+    private final DepartmentService departmentService;
 
     @QueryMapping
     public List<DepartmentResponseDTO> departments() {
         return departmentService.getAllDepartment();
     }
+
     @QueryMapping
     public DepartmentResponseDTO departmentById(@Argument Long id) {
         return departmentService.findByID(id);
     }
+
     @MutationMapping
-    public DepartmentResponseDTO addDepartment(@Valid @Argument DepartmentRequestDTO dto) {
-        return departmentService.addDepartment(dto);
+    public DepartmentResponseDTO addDepartment(
+            @Valid @Argument DepartmentRequestDTO input) {
+        return departmentService.addDepartment(input);
     }
+
     @MutationMapping
     public DepartmentResponseDTO updateDepartment(
             @Argument Long id,
-            @Valid @Argument("input") DepartmentRequestDTO dto) {
-        return departmentService.updateDepartment(id, dto);
+            @Valid @Argument DepartmentRequestDTO input) {
+        return departmentService.updateDepartment(id, input);
     }
+
     @MutationMapping
     public String deleteDepartment(@Argument Long id) {
         departmentService.deleteDepartment(id);
-        return  "Department deleted successfully with id: " + id;
-
+        return "Department deleted successfully with id: " + id;
     }
 }
+
