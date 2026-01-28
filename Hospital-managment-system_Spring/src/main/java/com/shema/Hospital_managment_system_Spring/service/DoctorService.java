@@ -1,8 +1,10 @@
 package com.shema.Hospital_managment_system_Spring.service;
 
+import com.shema.Hospital_managment_system_Spring.entity.Department;
 import com.shema.Hospital_managment_system_Spring.entity.Doctor;
 import com.shema.Hospital_managment_system_Spring.exception.BadRequestException;
 import com.shema.Hospital_managment_system_Spring.exception.NotFoundException;
+import com.shema.Hospital_managment_system_Spring.repository.DepartmentDao;
 import com.shema.Hospital_managment_system_Spring.repository.DoctorDao;
 import com.shema.Hospital_managment_system_Spring.repository.dto.request.DoctorRequestDTO;
 import com.shema.Hospital_managment_system_Spring.repository.dto.response.DepartmentResponseDTO;
@@ -23,6 +25,7 @@ import java.util.stream.Collectors;
 public class DoctorService {
 
     private final DoctorDao doctorDao;
+    private final DepartmentDao departmentDao;
 
 
 
@@ -37,7 +40,7 @@ public class DoctorService {
         if (contactNumberUnique(dto.getPhone(), 0)) {
             throw new BadRequestException("Phone number already exists");
         }
-        if (!doctorDao.existsById(dto.getDepartment())) {
+        if (!departmentDao.existByID(dto.getDepartment())) {
             throw new BadRequestException("Invalid department ID");
         }
 

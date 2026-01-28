@@ -102,7 +102,7 @@ public class DoctorDao {
         }
     }
     public void deleteDoctor(Long doctorId){
-        String sql = "DELETE FROM doctors WHERE  doctor_id = ?";
+        String sql = "UPDATE doctors SET is_active = false WHERE doctor_id = ?";
         try(Connection conn = DBConnection.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
 

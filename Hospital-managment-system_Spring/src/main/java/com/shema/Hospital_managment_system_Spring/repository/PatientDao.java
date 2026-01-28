@@ -86,7 +86,7 @@ public class PatientDao {
         return patients;
     }
     public void deletePatient( long patientId){
-        String sql = "DELETE FROM patients WHERE patient_id = ?";
+        String sql = "UPDATE patients SET is_active = false WHERE patient_id = ?";
         try(Connection conn = DBConnection.getConnection();
             PreparedStatement ps= conn.prepareStatement(sql)){
             ps.setLong(1,patientId);
