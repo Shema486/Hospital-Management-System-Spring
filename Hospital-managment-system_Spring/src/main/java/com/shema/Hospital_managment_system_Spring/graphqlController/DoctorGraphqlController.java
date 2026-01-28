@@ -36,8 +36,8 @@ public class DoctorGraphqlController {
         return doctorService.findDoctorsBySpecialization(specialization);
     }
     @MutationMapping
-    public DoctorResponseDTO addDoctor(@Valid @Argument DoctorRequestDTO requestDTO) {
-        return doctorService.addDoctor(requestDTO);
+    public DoctorResponseDTO addDoctor(@Valid @Argument DoctorRequestDTO input) {
+        return doctorService.addDoctor(input);
     }
     @MutationMapping
     public DoctorResponseDTO updateDoctor(@Argument Long id, @Valid @Argument("input") DoctorRequestDTO dto) {
