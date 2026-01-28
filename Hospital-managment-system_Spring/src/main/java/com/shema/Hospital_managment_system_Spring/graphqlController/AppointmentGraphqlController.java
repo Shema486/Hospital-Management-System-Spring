@@ -9,38 +9,40 @@ import lombok.AllArgsConstructor;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+
 
 import java.util.List;
-import java.util.Map;
+
 
 @Controller
 @AllArgsConstructor
 public class AppointmentGraphqlController {
-    private AppointmentService appointmentService;
+
+    private final AppointmentService appointmentService;
 
     @QueryMapping
     public List<AppointmentResponseDTO> appointments() {
         return appointmentService.getAllAppointments();
     }
+
     @MutationMapping
     public AppointmentResponseDTO addAppointment(
-            @Valid @Argument AppointmentRequestDTO requestDTO) {
-        return appointmentService.addAppointment(requestDTO);
+            @Argument @Valid AppointmentRequestDTO input) {
+        return appointmentService.addAppointment(input);
     }
+
     @MutationMapping
-    public String deleteAppointment(@PathVariable Long id) {
+    public String deleteAppointment(@Argument Long id) {
         appointmentService.deleteAppointment(id);
-        return  "Appointment deleted successfully" + id;
+        return "Appointment deleted successfully";
     }
+
     @MutationMapping
     public AppointmentResponseDTO updateAppointment(
             @Argument Long id,
-            @Argument("input") UpdateAppointmentStatusDTO input) {
+            @Argument UpdateAppointmentStatusDTO input) {
 
         return appointmentService.updateStatus(id, input.getStatus());
     }
