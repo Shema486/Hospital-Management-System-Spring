@@ -31,7 +31,7 @@ public class PatientService {
         return mapToResponseDTO(patient);
     }
 
-    // GET ALL
+
     public List<PatientResponseDTO> getAllPatients() {
         List<Patient> patients = patientDAO.getAllPatients();
         if (patients.isEmpty()) {
@@ -41,7 +41,16 @@ public class PatientService {
                 .map(this::mapToResponseDTO)
                 .collect(Collectors.toList());
     }
-    // ADD
+     public List<PatientResponseDTO> getPatients(int page, int size){
+         if (page < 1) page = 1;
+         if (size < 1 || size > 100) size = 10;
+         int offset = (page - 1) * size;
+         List<Patient> patients = patientDAO.getPatientPaginated(size, offset);
+         return patients.stream()
+                 .map(this::mapToResponseDTO)
+                 .collect(Collectors.toList());
+     }
+
     public PatientResponseDTO addPatient(PatientRequestDTO dto) {
         if (dto == null) {
             throw new BadRequestException("Patient data is required");

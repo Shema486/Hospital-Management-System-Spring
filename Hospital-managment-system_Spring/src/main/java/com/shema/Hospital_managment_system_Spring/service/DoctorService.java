@@ -2,6 +2,7 @@ package com.shema.Hospital_managment_system_Spring.service;
 
 import com.shema.Hospital_managment_system_Spring.entity.Department;
 import com.shema.Hospital_managment_system_Spring.entity.Doctor;
+import com.shema.Hospital_managment_system_Spring.entity.Patient;
 import com.shema.Hospital_managment_system_Spring.exception.BadRequestException;
 import com.shema.Hospital_managment_system_Spring.exception.NotFoundException;
 import com.shema.Hospital_managment_system_Spring.repository.DepartmentDao;
@@ -9,6 +10,7 @@ import com.shema.Hospital_managment_system_Spring.repository.DoctorDao;
 import com.shema.Hospital_managment_system_Spring.repository.dto.request.DoctorRequestDTO;
 import com.shema.Hospital_managment_system_Spring.repository.dto.response.DepartmentResponseDTO;
 import com.shema.Hospital_managment_system_Spring.repository.dto.response.DoctorResponseDTO;
+import com.shema.Hospital_managment_system_Spring.repository.dto.response.PatientResponseDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -66,6 +68,15 @@ public class DoctorService {
                 .collect(Collectors.toList());
     }
 
+    public List<DoctorResponseDTO> getDoctors(int page, int size){
+        if (page < 1) page = 1;
+        if (size < 1 || size > 100) size = 10;
+        int offset = (page - 1) * size;
+        List<Doctor> doctors = doctorDao.getDoctorsPaginated(size,offset);
+        return doctors.stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+    }
     public DoctorResponseDTO getDoctorById(Long doctorId) {
         Doctor doctor = doctorDao.searchDoctorById(doctorId);
         if (doctor == null) {

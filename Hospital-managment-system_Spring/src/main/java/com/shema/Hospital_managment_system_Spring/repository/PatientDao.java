@@ -1,5 +1,6 @@
 package com.shema.Hospital_managment_system_Spring.repository;
 
+import com.shema.Hospital_managment_system_Spring.entity.Doctor;
 import com.shema.Hospital_managment_system_Spring.entity.Patient;
 import com.shema.Hospital_managment_system_Spring.exception.DatabaseException;
 import com.shema.Hospital_managment_system_Spring.util.DBConnection;
@@ -83,6 +84,29 @@ public class PatientDao {
         }catch (SQLException e ){
             throw new DatabaseException("Error fetching all patients", e);
         }
+        return patients;
+    }
+    public List<Patient> getPatientPaginated(int limit, int offset){
+        List<Patient> patients = new ArrayList<>();
+        String sql = "SELECT * FROM patients ORDER BY patient_id LIMIT ? OFFSET ?";
+
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, limit);
+            ps.setInt(2, offset);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    patients.add(mapRowToPatient(rs));
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new DatabaseException("Error fetching paginated patients", e);
+        }
+
         return patients;
     }
     public void deletePatient( long patientId){

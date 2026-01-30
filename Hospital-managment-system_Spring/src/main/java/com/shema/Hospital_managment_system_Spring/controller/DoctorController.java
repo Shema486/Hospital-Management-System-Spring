@@ -4,6 +4,7 @@ import com.shema.Hospital_managment_system_Spring.repository.dto.request.DoctorR
 import com.shema.Hospital_managment_system_Spring.repository.dto.response.DoctorResponseDTO;
 import com.shema.Hospital_managment_system_Spring.service.DoctorService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -27,7 +28,14 @@ public class DoctorController {
             description = "You can find all doctors in all departments"
     )
     @GetMapping
-    public ResponseEntity<List<DoctorResponseDTO>> getAllDoctor() {
+    public ResponseEntity<List<DoctorResponseDTO>> getAllDoctor(
+            @Parameter(description = "Page number (>= 1)", example = "1")
+            @RequestParam(required = false) Integer page,
+            @Parameter(description = "Page size (1–100)", example = "10")
+            @RequestParam(required = false) Integer size) {
+        if (page != null && size != null) {
+            return ResponseEntity.ok(doctorService.getDoctors(page, size));
+        }
         return ResponseEntity.ok(doctorService.getAllDoctor());
     }
     @Operation(

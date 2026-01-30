@@ -4,6 +4,7 @@ import com.shema.Hospital_managment_system_Spring.repository.dto.request.Patient
 import com.shema.Hospital_managment_system_Spring.repository.dto.response.PatientResponseDTO;
 import com.shema.Hospital_managment_system_Spring.service.PatientService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -33,7 +34,15 @@ public class PatientController {
             }
     )
     @GetMapping
-    public ResponseEntity<List<PatientResponseDTO>> getAll() {
+    public ResponseEntity<List<PatientResponseDTO>> getAll(
+            @Parameter(description = "Page number (>= 1)", example = "1")
+            @RequestParam(required = false) Integer page,
+            @Parameter(description = "Page size (1–100)", example = "10")
+            @RequestParam(required = false) Integer size
+    ) {
+        if (page !=null && size !=null){
+            return ResponseEntity.ok(patientService.getPatients(page,size));
+        }
         return ResponseEntity.ok(patientService.getAllPatients());
     }
 
@@ -81,7 +90,7 @@ public class PatientController {
             summary = "Update a  patient",
             description = "return the patient that updated",
             responses = {
-                    @ApiResponse(responseCode = "201", description = "update succussfully"),
+                    @ApiResponse(responseCode = "201", description = "update successfully"),
                     @ApiResponse(responseCode = "404", description = "No patient found")
             }
     )
