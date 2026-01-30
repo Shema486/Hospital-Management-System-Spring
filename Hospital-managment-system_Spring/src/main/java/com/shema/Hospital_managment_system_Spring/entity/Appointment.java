@@ -10,12 +10,12 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Appointment {
-    private int appointmentId;
-    private int patientId;
-    private int doctorId;
+    private Long appointmentId;
+    private Long patientId;
+    private String patient;
+    private Long doctorId;
+    private String doctor;
     private LocalDateTime appointmentDate;
     private String status;
     private String reason;
-
-
 }

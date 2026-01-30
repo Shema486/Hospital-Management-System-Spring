@@ -1,0 +1,33 @@
+type Patient{
+    patientId:ID!
+    firstName:String!
+    lastName:String!
+    dob:String
+    gender:String
+    contactNumber:String
+    address:String
+}
+
+type Query {
+    patients:[Patient!]!
+    patientById(id:ID!):Patient
+    searchByName(lastName:String!):[Patient!]
+}
+input PatientRequest{
+    firstName: String!
+    lastName:String!
+    dob:String!
+    gender:String!
+    contactNumber:String!
+    address:String!
+
+}
+
+type Mutation{
+    addPatient(input: PatientRequest!):Patient
+    deletePatient(id:ID!) : ID!
+    updatePatient(id:ID,input:PatientRequest!):Patient
+}
+
+
+

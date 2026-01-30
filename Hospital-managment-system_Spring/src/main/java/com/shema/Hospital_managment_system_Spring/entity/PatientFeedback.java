@@ -11,8 +11,9 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class PatientFeedback {
 
-    private int feedbackId;
-    private int patient;
+    private Long feedbackId;
+    private Long patient;
+//    private String patientName;
     private int rating;
     private String comments;
     private LocalDate feedbackDate;

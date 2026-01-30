@@ -8,9 +8,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Department {
-    private int deptId;
-    private String deptName;
+    private Long deptId;
     private int locationFloor;
+    private String deptName;
 
 
 }

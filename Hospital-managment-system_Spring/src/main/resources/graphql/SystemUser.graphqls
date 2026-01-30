@@ -1,0 +1,36 @@
+type SystemUser {
+    userId: ID!
+    username: String!
+    fullName: String!
+    role: String!
+    isActive: Boolean!
+    createdAt: String
+    updatedAt: String
+}
+
+type LoginResponse {
+    userId: ID
+    username: String
+    role: String
+}
+
+input CreateUserInput {
+    username: String!
+    fullName: String!
+    password: String!
+    role: String!
+}
+
+input LoginInput {
+    username: String!
+    password: String!
+}
+
+extend type Query {
+    getAllUsers: [SystemUser!]
+}
+
+extend type Mutation {
+    createUser(input: CreateUserInput!): SystemUser
+    login(input: LoginInput!): LoginResponse
+}

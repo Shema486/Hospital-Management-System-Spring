@@ -9,12 +9,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Doctor {
-    private int doctorId;
+    private  Long doctorId;
     private String firstName;
     private String lastName;
     private String specialization;
     private String email;
     private String phone;
-    private int department;
+    private Long department;
 
 }

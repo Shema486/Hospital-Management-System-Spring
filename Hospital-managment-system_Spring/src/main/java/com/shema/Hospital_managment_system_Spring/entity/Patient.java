@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Patient {
-    private int patientId;
+    private Long patientId;
     private String firstName;
     private String lastName;
     private LocalDate dob;
